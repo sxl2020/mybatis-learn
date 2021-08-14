@@ -25,7 +25,7 @@
 	<mappers>
 		<package name="com.sxl.config.mapper" />
 
-		<package name="com.atguigu.mybatis.dao"/>
+		<package name="com.sxl.mapperlearn.dao"/>
 
 	</mappers>
 </configuration>
