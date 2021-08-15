@@ -17,9 +17,8 @@ public interface EmployeeMapper {
 
 	/**
 	 * ******************************************************************************************
-	 * @description : 入参demo1
-	 * 入参为单个参数
-	 *
+	 * @description : 入参demo1: 入参为单个参数
+	 * @description : resultType demo1: 返回结果为单个实体类
 	 * ******************************************************************************************
 	*/
  	Employee getEmpById(Integer id);
@@ -56,37 +55,33 @@ public interface EmployeeMapper {
 
 
 
-	@MapKey("lastName")
+	/**
+	 * ******************************************************************************************
+	 * @description : resultType demo2
+	 * 				  返回结果为对象列表
+	 *
+	 * ******************************************************************************************
+	 */
+	public List<Employee> getEmpsList();
+
+	/**
+	 * ******************************************************************************************
+	 * @description : resultType demo3
+	 * 				  返回结果为 map对象
+	 *
+	 * ******************************************************************************************
+	 */
+	@MapKey("email")
 	public Map<String, Employee> getEmpByLastNameLikeReturnMap(String lastName);
+
+	public Map<String, Object> getEmpByIdReturnMap(Integer id);
+
+	public List<Map<String, Object>> getAllEmpByReturnMapList();
+
 
 	public int addEmp(Employee employee);
 
 	public boolean updateEmp(Employee employee);
-
-
-
-
-	/** 
-	 * @description 
-	 * @param employee
-	 * @return boolean
-	 * @author suqiancheng
-	 * @date 2021/8/9 下午11:10
-	 */ 
-	
-
-	/** 
-	 * @description 
-	 * @param id
-	 * @return void
-	 * @author suqiancheng
-	 * @date 2021/8/9 下午11:10
-	 */
-
-	public Map<String, Object> getEmpByIdReturnMap(Integer id);
-
-	public List<Employee> getEmpsByLastNameLike(String lastName);
-
 
 	public void deleteEmpById(Integer id);
 

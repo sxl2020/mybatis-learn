@@ -17,30 +17,27 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyBatisMapperTest {
+public class MapperResultMapTest {
 	public SqlSessionFactory getSqlSessionFactory() throws IOException {
 		String resource = "mybatis-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		return new SqlSessionFactoryBuilder().build(inputStream);
 	}
-
 	/**
 	 * @description 演示Mybatis原理，采用的是动态代理，为mapper接口生成一个代理对象
-	 * @date 2021/8/10 下午7:06
 	 */
 	@Test
-	public void test01() throws IOException {
+	public void pojoResultTypeTest() throws IOException {
 		// 1、获取sqlSessionFactory对象
 		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 		// 2、获取sqlSession对象
-		SqlSession openSession = sqlSessionFactory.openSession();
+		SqlSession openSession = sqlSessionFactory.openSession(true);
 		try {
 			// 3、获取接口的实现类对象
 			//会为接口自动的创建一个代理对象，代理对象去执行增删改查方法
 			EmployeeMapper mapper = openSession.getMapper(EmployeeMapper.class);
-			Employee employee = mapper.getEmpById(1);
-			System.out.println(mapper.getClass());
-			System.out.println(employee);
+			Employee employee1 = mapper.getEmpByIdAndLastName(1,"sqc");
+			System.out.println(employee1);
 		} finally {
 			openSession.close();
 		}
