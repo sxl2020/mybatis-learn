@@ -30,7 +30,7 @@
 				type:指定要起别名的类型全类名;默认别名就是类名小写；employee
 				alias:指定新的别名
 		 -->
-		<!-- <typeAlias type="com.atguigu.mybatis.bean.Employee" alias="emp"/> -->
+		<!-- <typeAlias type="Employee" alias="emp"/> -->
 		
 		<!-- 2、package:为某个包下的所有类批量起别名 
 				name：指定包名（为当前包以及下面所有的后代包的每一个类都起一个默认别名（类名小写），）
@@ -112,7 +112,7 @@
 						不重要，简单的Dao接口为了开发快速可以使用注解；
 		-->
 		<!-- <mapper resource="mybatis/mapper/EmployeeMapper.xml"/> -->
-		<!-- <mapper class="com.atguigu.mybatis.dao.EmployeeMapperAnnotation"/> -->
+		<!-- <mapper class="EmployeeMapperAnnotation"/> -->
 		
 		<!-- 批量注册： -->
 		<package name="com.sxl.config.mapper"/>
