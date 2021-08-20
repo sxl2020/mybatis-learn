@@ -113,18 +113,6 @@
 	 <!--public List<Employee> getEmpsByConditionForeach(List<Integer> ids);  -->
 	 <select id="getEmpsByConditionForeach" resultType="com.sxl.mybatis.bean.Employee">
 	 	select * from tbl_employee
-	 	<!--
-	 		collection：指定要遍历的集合：
-	 			list类型的参数会特殊处理封装在map中，map的key就叫list
-	 		item：将当前遍历出的元素赋值给指定的变量
-	 		separator:每个元素之间的分隔符
-	 		open：遍历出所有结果拼接一个开始的字符
-	 		close:遍历出所有结果拼接一个结束的字符
-	 		index:索引。遍历list的时候是index就是索引，item就是当前值
-	 				      遍历map的时候index表示的就是map的key，item就是map的值
-	 		
-	 		#{变量名}就能取出变量的值也就是当前遍历出的元素
-	 	  -->
 	 	<foreach collection="ids" item="item_id" separator=","
 	 		open="where id in(" close=")">
 	 		#{item_id}
@@ -145,41 +133,13 @@
 	<!-- 批量保存 foreach 方式2-->
 	<!-- 这种方式需要数据库连接属性allowMultiQueries=true；
         这种分号分隔多个sql可以用于其他的批量操作（删除，修改） -->
-	  <insert id="addEmps">
+	  <insert id="addEmps2">
 	 	<foreach collection="emps" item="emp" separator=";">
 	 		insert into tbl_employee(last_name,email,gender,d_id)
 	 		values(#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
 	 	</foreach>
 	 </insert>
-	 
-	 <!-- Oracle数据库批量保存： 
-	 	Oracle不支持values(),(),()
-	 	Oracle支持的批量方式
-	 	1、多个insert放在begin - end里面
-	 		begin
-			    insert into employees(employee_id,last_name,email) 
-			    values(employees_seq.nextval,'test_001','test_001@sxl.com');
-			    insert into employees(employee_id,last_name,email) 
-			    values(employees_seq.nextval,'test_002','test_002@sxl.com');
-			end;
-		2、利用中间表：
-			insert into employees(employee_id,last_name,email)
-		       select employees_seq.nextval,lastName,email from(
-		              select 'test_a_01' lastName,'test_a_e01' email from dual
-		              union
-		              select 'test_a_02' lastName,'test_a_e02' email from dual
-		              union
-		              select 'test_a_03' lastName,'test_a_e03' email from dual
-		       )	
-	 -->
-	 <insert id="addEmps" databaseId="oracle">
-	 	<!-- oracle第一种批量方式 -->
-	 	<!-- <foreach collection="emps" item="emp" open="begin" close="end;">
-	 		insert into employees(employee_id,last_name,email) 
-			    values(employees_seq.nextval,#{emp.lastName},#{emp.email});
-	 	</foreach> -->
-	 </insert>
-	 
+
 	 <!-- 两个内置参数：
 	 	不只是方法传递过来的参数可以被用来判断，取值。。。
 	 	mybatis默认还有两个内置参数：
@@ -198,13 +158,18 @@
 	  			include-property：取值的正确方式${prop},
 	  			#{不能使用这种方式}
 	  -->
+
 	  <sql id="insertColumn">
-	  		<if test="_databaseId=='oracle'">
-	  			employee_id,last_name,email
-	  		</if>
-	  		<if test="_databaseId=='mysql'">
-	  			last_name,email,gender,d_id
-	  		</if>
+	  		last_name,email,gender,d_id
 	  </sql>
-	  
+
+	<insert id="addEmps2">
+		insert into tbl_employee(
+		<include refid="insertColumn"></include>
+		)
+		values
+		<foreach collection="emps" item="emp" separator=",">
+			(#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
+		</foreach>
+	</insert>
 </mapper>

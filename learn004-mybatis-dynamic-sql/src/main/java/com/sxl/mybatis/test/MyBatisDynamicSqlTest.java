@@ -34,11 +34,10 @@ public class MyBatisDynamicSqlTest {
 			//select * from tbl_employee where id=? and last_name like ?
 			//测试if\where
 			Employee employee = new Employee(1, "", null, null);
-			/*
 			List<Employee> emps = mapper.getEmpsByConditionIf(employee );
 			for (Employee emp : emps) {
 				System.out.println(emp);
-			}*/
+			}
 
 			//查询的时候如果某些条件没带可能sql拼装会有问题
 			//1、给where后面加上1=1，以后的条件都and xxx.
@@ -62,11 +61,11 @@ public class MyBatisDynamicSqlTest {
 			/*mapper.updateEmp(employee);
 			openSession.commit();*/
 
-			List<Employee> list2 = mapper.getEmpsByConditionForeach(Arrays.asList(1,14,15,16));
+			/*List<Employee> list2 = mapper.getEmpsByConditionForeach(Arrays.asList(1,14,15,16));
 			for (Employee emp : list2) {
 				System.out.println(emp);
 			}
-
+*/
 		}finally{
 			openSession.close();
 		}
@@ -104,7 +103,6 @@ public class MyBatisDynamicSqlTest {
 			openSession.close();
 		}
 	}
-	
 
 
 }
