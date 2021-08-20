@@ -163,7 +163,7 @@
 	  		last_name,email,gender,d_id
 	  </sql>
 
-	<insert id="addEmps2">
+<!--	<insert id="addEmps2">
 		insert into tbl_employee(
 		<include refid="insertColumn"></include>
 		)
@@ -172,4 +172,5 @@
 			(#{emp.lastName},#{emp.email},#{emp.gender},#{emp.dept.id})
 		</foreach>
 	</insert>
+	-->
 </mapper>
